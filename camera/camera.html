@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera</title>
+    <script type="text/javascript" src="https://unpkg.com/webcam-easy@1.1.1/dist/webcam-easy.min.js"></script>
+    <style>
+        a {
+            padding: 10px;
+            background-color: orange;
+            color: aliceblue;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        canvas {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <video id="webCam" autoplay playsinline width="800" height="600"></video>
+    <canvas id="canvas" style="display: none;"></canvas>
+    <a download onclick="takeAPicture()">SNAP</a>
+    <script>
+        const webCamElement = document.getElementById("webCam");
+        const canvasElement = document.getElementById("canvas");
+        const webcam = new Webcam(webCamElement, "user", canvasElement);
+
+        async function startCamera() {
+            await webcam.start();
+        }
+
+        async function takeAPicture() {
+            let picture = await webcam.snap();
+
+            if (picture) {
+                window.location.assign("/index.html");
+            } else {
+                alert("Invalid");
+            }
+        }
+
+        startCamera(); // Start the camera when the page loads
+    </script>
+</body>
+
+</html>
